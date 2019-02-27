@@ -14,7 +14,7 @@
 #import "MTFontManager.h"
 #import "MTMathListBuilder.h"
 #import "MTTypesetter.h"
-#import "iosMath2-Bridging-Header.h"
+//#import "iosMath2-Bridging-Header.h"
 
 @implementation MTMathUILabel {
     MTLabel* _errorLabel;
