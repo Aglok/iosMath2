@@ -42,7 +42,7 @@
         NSString* mathTablePlist = [bundle pathForResource:name ofType:@"plist"];
         NSDictionary* dict = [NSDictionary dictionaryWithContentsOfFile:mathTablePlist];
         self.rawMathTable = dict;
-        
+
         self.mathTable = [[MTFontMathTable alloc] initWithFont:self mathTable:_rawMathTable];
     }
     return self;
@@ -51,8 +51,8 @@
 + (NSBundle*) fontBundle
 {
     // Uses bundle for class so that this can be access by the unit tests.
-    //return [NSBundle bundleWithURL:[[NSBundle bundleForClass:[self class]] URLForResource:@"mathFonts" withExtension:@"bundle"]];
-    return [NSBundle mainBundle];
+    return [NSBundle bundleWithURL:[[NSBundle bundleForClass:[self class]] URLForResource:@"mathFonts" withExtension:@"bundle"]];
+    //return [NSBundle mainBundle];
 }
 
 - (MTFont *)copyFontWithSize:(CGFloat)size
