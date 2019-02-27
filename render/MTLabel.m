@@ -9,7 +9,7 @@
 //
 
 #import "MTLabel.h"
-#import "iosMath2-Bridging-Header.h"
+//#import "iosMath2-Bridging-Header.h"
 
 #if !TARGET_OS_IPHONE
 @implementation MTLabel
@@ -26,7 +26,7 @@
         super.editable = NO;
         super.selectable = NO;
     }
-    
+
     return self;
 }
 
