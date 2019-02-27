@@ -10,7 +10,7 @@
 
 #import "MTMathListDisplay.h"
 //#import "iosMath2-Swift.h"
-#import "iosMath2-Bridging-Header.h"
+//#import "iosMath2-Bridging-Header.h"
 #import "MTFont+Internal.h"
 
 @interface MTDisplay ()
