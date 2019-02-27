@@ -14,7 +14,7 @@ beautifully rendered math equations in iOS/MacOS applications.
   s.ios.deployment_target = '6.0'
   s.osx.deployment_target = '10.8'
   s.source       = { :git => "https://github.com/Aglok/iosMath2.git", :tag => s.version.to_s }
-  s.source_files = '/**/*.{h,m}'
+  s.source_files = '**/*.{h,m}'
   s.private_header_files = 'render/internal/*.h'
   s.resource_bundles = {
      'mathFonts' => [ 'fonts/*.otf', 'fonts/*.plist' ]
