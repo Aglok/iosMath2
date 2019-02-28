@@ -11,6 +11,7 @@
 #import "MTTypesetter.h"
 #import "MTMathListDisplayInternal.h"
 #import "MTUnicode.h"
+#import "MTFont+Internal.h"
 //#import "MTFont.h"
 
 
