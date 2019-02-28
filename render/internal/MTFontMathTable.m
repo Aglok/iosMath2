@@ -10,6 +10,7 @@
 //
 
 #import "MTFontMathTable.h"
+#import "MTFont.h"
 #import "MTFont+Internal.h"
 //#import "iosMath2-Swift.h"
 //#import "iosMath2-Bridging-Header.h"

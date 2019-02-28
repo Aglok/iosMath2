@@ -9,7 +9,7 @@
 //
 
 #import "MTFont.h"
-#import "internal/MTFont+Internal.h"
+#import "MTFont+Internal.h"
 //#import "iosMath2-Swift.h"
 
 @interface MTFont ()
