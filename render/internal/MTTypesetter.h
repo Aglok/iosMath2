@@ -11,8 +11,6 @@
 @import Foundation;
 
 #import "MTMathListDisplay.h"
-//#import "iosMath2-Swift.h"
-//#import "MTFont+Internal.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

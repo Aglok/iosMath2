@@ -619,7 +619,7 @@ NSString *const MTParseError = @"ParseError";
 - (MTMathAtom*) buildTable:(NSString*) env firstList:(MTMathList*) firstList row:(BOOL) isRow
 {
     // Save the current env till an new one gets built.
-    MTEnvProperties* oldEnv = _currentEnv; 
+    MTEnvProperties* oldEnv = _currentEnv;
     _currentEnv = [[MTEnvProperties alloc] initWithName:env];
     NSInteger currentRow = 0;
     NSInteger currentCol = 0;

@@ -11,7 +11,7 @@
 
 @import Foundation;
 @import CoreText;
-//#import "iosMath2-Swift.h"
+
 @class MTFont;
 
 /** MTGlyphPart represents a part of a glyph used for assembling a large vertical or horizontal

@@ -10,8 +10,7 @@
 
 #import "MTFont.h"
 #import "MTFontMathTable.h"
-//#import "iosMath2-Bridging-Header.h"
-//#import "iosMath2-Swift.h"
+
 /** This category add functions to MTFont that are meant to be internal
  to this library for rendering purposes. */
 @interface MTFont (Internal)

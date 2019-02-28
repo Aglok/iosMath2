@@ -12,8 +12,6 @@
 #import "MTFontMathTable.h"
 #import "MTFont.h"
 #import "MTFont+Internal.h"
-//#import "iosMath2-Swift.h"
-//#import "iosMath2-Bridging-Header.h"
 
 
 @interface MTGlyphPart ()
@@ -47,11 +45,9 @@
 {
     self = [super init];
     if (self) {
-        _font = font;
-        NSParameterAssert(self.font);
-        
+        NSParameterAssert(font);
         NSParameterAssert(font.ctFont);
-
+        _font = font;
         // do domething with font
         _unitsPerEm = CTFontGetUnitsPerEm(font.ctFont);
         _fontSize = font.fontSize;
@@ -490,7 +486,7 @@ static NSString* const kAccents = @"accents";
     } else {
         // If no top accent is defined then it is the center of the advance width.
         CGSize advances;
-        CTFontGetAdvancesForGlyphs(self.font.ctFont, kCTFontOrientationHorizontal, &glyph, &advances, 1);
+        CTFontGetAdvancesForGlyphs(self.font.ctFont, kCTFontHorizontalOrientation, &glyph, &advances, 1);
         return advances.width/2;
     }
 }
