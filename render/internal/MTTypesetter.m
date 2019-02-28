@@ -9,9 +9,9 @@
 //
 //#import "iosMath2-Swift.h"
 #import "MTTypesetter.h"
+#import "MTFont+Internal.h"
 #import "MTMathListDisplayInternal.h"
 #import "MTUnicode.h"
-#import "MTFont+Internal.h"
 //#import "MTFont.h"
 
 
