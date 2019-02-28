@@ -9,9 +9,10 @@
 //
 //#import "iosMath2-Swift.h"
 #import "MTTypesetter.h"
+#import "MTFont+Internal.h"
 #import "MTMathListDisplayInternal.h"
 #import "MTUnicode.h"
-#import "MTFont.h"
+//#import "MTFont.h"
 
 
 #pragma mark Inter Element Spacing
@@ -94,7 +95,6 @@ static const unichar kMTUnicodeGreekCapitalEnd = 0x03A9;
 
 #define IS_LOWER_EN(ch) ((ch) >= 'a' && (ch) <= 'z')
 #define IS_UPPER_EN(ch) ((ch) >= 'A' && (ch) <= 'Z')
-#define IS_LOWER_RU(ch) ((ch) >= 'а' && (ch) <= 'я')
 #define IS_NUMBER(ch) ((ch) >= '0' && (ch) <= '9')
 #define IS_LOWER_GREEK(ch) ((ch) >= kMTUnicodeGreekLowerStart && (ch) <= kMTUnicodeGreekLowerEnd)
 #define IS_CAPITAL_GREEK(ch) ((ch) >= kMTUnicodeGreekCapitalStart && (ch) <= kMTUnicodeGreekCapitalEnd)
