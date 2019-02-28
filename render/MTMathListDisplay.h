@@ -11,7 +11,6 @@
 
 @import Foundation;
 @import QuartzCore;
-@import CoreText;
 
 // This header file is imported by Foudation.
 //#include <TargetConditionals.h>

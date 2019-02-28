@@ -5203,16 +5203,19 @@
 			<string>dbloverlinecmb.h1</string>
 		</array>
 		<key>equal</key>
-		<array/>
+		<array>
+		</array>
 		<key>equivalence</key>
-		<array/>
+		<array>
+		</array>
 		<key>lowlinecmb</key>
 		<array>
 			<string>lowlinecmb</string>
 			<string>lowlinecmb.h1</string>
 		</array>
 		<key>minus</key>
-		<array/>
+		<array>
+		</array>
 		<key>overlinecmb</key>
 		<array>
 			<string>overlinecmb</string>
@@ -5482,7 +5485,8 @@
 			<string>uni21F6.h1</string>
 		</array>
 		<key>uni2263</key>
-		<array/>
+		<array>
+		</array>
 		<key>uni23B4</key>
 		<array>
 			<string>uni23B4</string>

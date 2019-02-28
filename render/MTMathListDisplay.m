@@ -369,7 +369,7 @@ static BOOL isIos6Supported() {
 {
     // sets up the degree of the radical
     CGFloat kernBefore = fontMetrics.radicalKernBeforeDegree;
-    CGFloat kernAfter = fontMetrics.radicalKernBeforeDegree;
+    CGFloat kernAfter = fontMetrics.radicalKernAfterDegree;
     CGFloat raise = fontMetrics.radicalDegreeBottomRaisePercent * (self.ascent - self.descent);
 
     // The layout is:
