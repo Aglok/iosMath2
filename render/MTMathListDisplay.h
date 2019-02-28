@@ -17,7 +17,7 @@
 //#include <TargetConditionals.h>
 
 #import "MTConfig.h"
-//#import "MTFont.h"
+#import "MTFont.h"
 #import "MTMathList.h"
 
 NS_ASSUME_NONNULL_BEGIN
