@@ -306,7 +306,8 @@ NSString *const MTSymbolDegree = @"\u00B0"; // \circ
     }
     static NSDictionary<NSString*, NSArray*>* matrixEnvs = nil;
     if (!matrixEnvs) {
-        matrixEnvs = @{ @"matrix" : @[],
+        matrixEnvs = @{ @"array" : @[],
+                        @"matrix" : @[],
                         @"pmatrix" : @[ @"(", @")"],
                         @"bmatrix" : @[ @"[", @"]"],
                         @"Bmatrix" : @[ @"{", @"}"],
