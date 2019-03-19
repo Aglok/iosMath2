@@ -4,7 +4,7 @@
 //
 //  Created by Kostub Deshmukh on 8/28/13.
 //  Copyright (C) 2013 MathChat
-//   
+//
 //  This software may be modified and distributed under the terms of the
 //  MIT license. See the LICENSE file for details.
 //
@@ -85,9 +85,9 @@ NSString *const MTSymbolDegree = @"\u00B0"; // \circ
 + (nullable MTMathAtom *)atomForCharacter:(unichar)ch
 {
     NSString *chStr = [NSString stringWithCharacters:&ch length:1];
-    
+
     //printf("%d\n", hasRussianCharacter);
-    
+
     //if NSString char is russian character, then create an atom MTMathAtom
 //    BOOL hasRussianCharacter = [MTMathAtomFactory hasRussianCharacters:chStr];
 //    if(hasRussianCharacter){
@@ -97,7 +97,7 @@ NSString *const MTSymbolDegree = @"\u00B0"; // \circ
     if ((ch >= 0x0410 && ch <= 0x044F) | 0x0401 | 0x0451){
         // show basic cyrillic alphabet. Latin Modern Math font is not good for cyrillic symbols
         return [MTMathAtom atomWithType:kMTMathAtomOrdinary value:chStr];
-        
+
     }else if(ch < 0x21 || ch > 0x7E){
         // skip non ascii characters and spaces;
         return nil;
@@ -163,7 +163,7 @@ NSString *const MTSymbolDegree = @"\u00B0"; // \circ
         // Switch to the canonical name
         symbolName = canonicalName;
     }
-    
+
     NSDictionary* commands = [self supportedLatexSymbols];
     MTMathAtom* atom = commands[symbolName];
     if (atom) {
@@ -434,7 +434,7 @@ NSString *const MTSymbolDegree = @"\u00B0"; // \circ
     if (!commands) {
         commands = [NSMutableDictionary dictionaryWithDictionary:@{
                      @"square" : [MTMathAtomFactory placeholder],
-                     
+
                      // Greek characters
                      @"alpha" : [MTMathAtom atomWithType:kMTMathAtomVariable value:@"\u03B1"],
                      @"beta" : [MTMathAtom atomWithType:kMTMathAtomVariable value:@"\u03B2"],
@@ -481,19 +481,19 @@ NSString *const MTSymbolDegree = @"\u00B0"; // \circ
                      @"Phi" : [MTMathAtom atomWithType:kMTMathAtomVariable value:@"\u03A6"],
                      @"Psi" : [MTMathAtom atomWithType:kMTMathAtomVariable value:@"\u03A8"],
                      @"Omega" : [MTMathAtom atomWithType:kMTMathAtomVariable value:@"\u03A9"],
-                     
+
                      // Open
                      @"lceil" : [MTMathAtom atomWithType:kMTMathAtomOpen value:@"\u2308"],
                      @"lfloor" : [MTMathAtom atomWithType:kMTMathAtomOpen value:@"\u230A"],
                      @"langle" : [MTMathAtom atomWithType:kMTMathAtomOpen value:@"\u27E8"],
                      @"lgroup" : [MTMathAtom atomWithType:kMTMathAtomOpen value:@"\u27EE"],
-                     
+
                      // Close
                      @"rceil" : [MTMathAtom atomWithType:kMTMathAtomClose value:@"\u2309"],
                      @"rfloor" : [MTMathAtom atomWithType:kMTMathAtomClose value:@"\u230B"],
                      @"rangle" : [MTMathAtom atomWithType:kMTMathAtomClose value:@"\u27E9"],
                      @"rgroup" : [MTMathAtom atomWithType:kMTMathAtomClose value:@"\u27EF"],
-                     
+
                      // Arrows
                      @"leftarrow" : [MTMathAtom atomWithType:kMTMathAtomRelation value:@"\u2190"],
                      @"uparrow" : [MTMathAtom atomWithType:kMTMathAtomRelation value:@"\u2191"],
@@ -518,8 +518,8 @@ NSString *const MTSymbolDegree = @"\u00B0"; // \circ
                      @"Longleftarrow" : [MTMathAtom atomWithType:kMTMathAtomRelation value:@"\u27F8"],
                      @"Longrightarrow" : [MTMathAtom atomWithType:kMTMathAtomRelation value:@"\u27F9"],
                      @"Longleftrightarrow" : [MTMathAtom atomWithType:kMTMathAtomRelation value:@"\u27FA"],
-                     
-                     
+
+
                      // Relations
                      @"leq" : [MTMathAtom atomWithType:kMTMathAtomRelation value:MTSymbolLessEqual],
                      @"geq" : [MTMathAtom atomWithType:kMTMathAtomRelation value:MTSymbolGreaterEqual],
@@ -551,7 +551,7 @@ NSString *const MTSymbolDegree = @"\u00B0"; // \circ
                      @"sqsupseteq" : [MTMathAtom atomWithType:kMTMathAtomRelation value:@"\u2292"],
                      @"models" : [MTMathAtom atomWithType:kMTMathAtomRelation value:@"\u22A7"],
                      @"perp" : [MTMathAtom atomWithType:kMTMathAtomRelation value:@"\u27C2"],
-                     
+
                      // operators
                      @"times" : [MTMathAtomFactory times],
                      @"div"   : [MTMathAtomFactory divide],
@@ -579,7 +579,7 @@ NSString *const MTSymbolDegree = @"\u00B0"; // \circ
                      @"star"  : [MTMathAtom atomWithType:kMTMathAtomBinaryOperator value:@"\u22C6"],
                      @"cdot"  : [MTMathAtom atomWithType:kMTMathAtomBinaryOperator value:@"\u22C5"],
                      @"amalg" : [MTMathAtom atomWithType:kMTMathAtomBinaryOperator value:@"\u2A3F"],
-                     
+
                      // No limit operators
                      @"log" : [MTMathAtomFactory operatorWithName:@"log" limits:NO],
                      @"lg" : [MTMathAtomFactory operatorWithName:@"lg" limits:NO],
@@ -603,7 +603,7 @@ NSString *const MTSymbolDegree = @"\u00B0"; // \circ
                      @"hom" : [MTMathAtomFactory operatorWithName:@"hom" limits:NO],
                      @"exp" : [MTMathAtomFactory operatorWithName:@"exp" limits:NO],
                      @"deg" : [MTMathAtomFactory operatorWithName:@"deg" limits:NO],
-                     
+
                      // Limit operators
                      @"lim" : [MTMathAtomFactory operatorWithName:@"lim" limits:YES],
                      @"limsup" : [MTMathAtomFactory operatorWithName:@"lim sup" limits:YES],
@@ -615,7 +615,7 @@ NSString *const MTSymbolDegree = @"\u00B0"; // \circ
                      @"det" : [MTMathAtomFactory operatorWithName:@"det" limits:YES],
                      @"Pr" : [MTMathAtomFactory operatorWithName:@"Pr" limits:YES],
                      @"gcd" : [MTMathAtomFactory operatorWithName:@"gcd" limits:YES],
-                     
+
                      // Large operators
                      @"prod" : [MTMathAtomFactory operatorWithName:@"\u220F" limits:YES],
                      @"coprod" : [MTMathAtomFactory operatorWithName:@"\u2210" limits:YES],
@@ -631,7 +631,7 @@ NSString *const MTSymbolDegree = @"\u00B0"; // \circ
                      @"bigotimes" : [MTMathAtomFactory operatorWithName:@"\u2A02" limits:YES],
                      @"biguplus" : [MTMathAtomFactory operatorWithName:@"\u2A04" limits:YES],
                      @"bigsqcup" : [MTMathAtomFactory operatorWithName:@"\u2A06" limits:YES],
-                     
+
                      // Latex command characters
                      @"{" : [MTMathAtom atomWithType:kMTMathAtomOpen value:@"{"],
                      @"}" : [MTMathAtom atomWithType:kMTMathAtomClose value:@"}"],
@@ -642,12 +642,12 @@ NSString *const MTSymbolDegree = @"\u00B0"; // \circ
                      @"_" : [MTMathAtom atomWithType:kMTMathAtomOrdinary value:@"_"],
                      @" " : [MTMathAtom atomWithType:kMTMathAtomOrdinary value:@" "],
                      @"backslash" : [MTMathAtom atomWithType:kMTMathAtomOrdinary value:@"\\"],
-                     
+
                      // Punctuation
                      // Note: \colon is different from : which is a relation
                      @"colon" : [MTMathAtom atomWithType:kMTMathAtomPunctuation value:@":"],
                      @"cdotp" : [MTMathAtom atomWithType:kMTMathAtomPunctuation value:@"\u00B7"],
-                     
+
                      // Other symbols
                      @"degree" : [MTMathAtom atomWithType:kMTMathAtomOrdinary value:@"\u00B0"],
                      @"neg" : [MTMathAtom atomWithType:kMTMathAtomOrdinary value:@"\u00AC"],
@@ -678,7 +678,7 @@ NSString *const MTSymbolDegree = @"\u00B0"; // \circ
                      @"imath" : [MTMathAtom atomWithType:kMTMathAtomOrdinary value:@"\U0001D6A4"],
                      @"jmath" : [MTMathAtom atomWithType:kMTMathAtomOrdinary value:@"\U0001D6A5"],
                      @"partial" : [MTMathAtom atomWithType:kMTMathAtomOrdinary value:@"\U0001D715"],
-                     
+
                      // Spacing
                      @"," : [[MTMathSpace alloc] initWithSpace:3],
                      @">" : [[MTMathSpace alloc] initWithSpace:4],
@@ -686,14 +686,14 @@ NSString *const MTSymbolDegree = @"\u00B0"; // \circ
                      @"!" : [[MTMathSpace alloc] initWithSpace:-3],
                      @"quad" : [[MTMathSpace alloc] initWithSpace:18],  // quad = 1em = 18mu
                      @"qquad" : [[MTMathSpace alloc] initWithSpace:36], // qquad = 2em
-                     
+
                      // Style
                      @"displaystyle" : [[MTMathStyle alloc] initWithStyle:kMTLineStyleDisplay],
                      @"textstyle" : [[MTMathStyle alloc] initWithStyle:kMTLineStyleText],
                      @"scriptstyle" : [[MTMathStyle alloc] initWithStyle:kMTLineStyleScript],
                      @"scriptscriptstyle" : [[MTMathStyle alloc] initWithStyle:kMTLineStyleScriptScript],
                      }];
-        
+
     }
     return commands;
 }
@@ -711,6 +711,8 @@ NSString *const MTSymbolDegree = @"\u00B0"; // \circ
                     @"ge" : @"geq",
                     @"lbrace" : @"{",
                     @"rbrace" : @"}",
+                    @"lbrack" : @"[",
+                    @"rbrack" : @"]",
                     @"Vert" : @"|",
                     @"gets" : @"leftarrow",
                     @"to" : @"rightarrow",
@@ -732,7 +734,7 @@ NSString *const MTSymbolDegree = @"\u00B0"; // \circ
             if (atom.nucleus.length == 0) {
                 continue;
             }
-            
+
             NSString* existingCommand = textToCommands[atom.nucleus];
             if (existingCommand) {
                 // If there are 2 commands for the same symbol, choose one deterministically.
