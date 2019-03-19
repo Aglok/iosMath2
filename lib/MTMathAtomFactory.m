@@ -838,6 +838,8 @@ NSString *const MTSymbolDegree = @"\u00B0"; // \circ
                    @"}" : @"}",
                    @"{" : @"{",
                    @"lbrace" : @"{",
+                   @"lbrack" : @"[",
+                   @"rbrack" : @"]",
                    @"lceil" : @"\u2308",
                    @"rceil" : @"\u2309",
                    @"lfloor" : @"\u230A",
