@@ -85,21 +85,11 @@ NSString *const MTSymbolDegree = @"\u00B0"; // \circ
 + (nullable MTMathAtom *)atomForCharacter:(unichar)ch
 {
     NSString *chStr = [NSString stringWithCharacters:&ch length:1];
-
-    //printf("%d\n", hasRussianCharacter);
-
-    //if NSString char is russian character, then create an atom MTMathAtom
-//    BOOL hasRussianCharacter = [MTMathAtomFactory hasRussianCharacters:chStr];
-//    if(hasRussianCharacter){
-//        NSLog(@"%@", chStr);
-//        return [MTMathAtom atomWithType:kMTMathAtomVariable value:chStr];
-//    }
-    if ((ch >= 0x0410 && ch <= 0x044F) | 0x0401 | 0x0451){
+    if (ch > 0x0410 && ch < 0x044F){
         // show basic cyrillic alphabet. Latin Modern Math font is not good for cyrillic symbols
         return [MTMathAtom atomWithType:kMTMathAtomOrdinary value:chStr];
-
-    }else if(ch < 0x21 || ch > 0x7E){
-        // skip non ascii characters and spaces;
+    } else if (ch < 0x21 || ch > 0x7E) {
+        // skip non ascii characters and spaces
         return nil;
     } else if (ch == '$' || ch == '%' || ch == '#' || ch == '&' || ch == '~' || ch == '\'') {
         // These are latex control characters that have special meanings. We don't support them.

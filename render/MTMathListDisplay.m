@@ -27,14 +27,14 @@ static BOOL isIos6Supported() {
 #if TARGET_OS_IPHONE
         NSString *reqSysVer = @"6.0";
         NSString *currSysVer = [UIDevice currentDevice].systemVersion;
-
+        
         if ([currSysVer compare:reqSysVer options:NSNumericSearch] != NSOrderedAscending) {
             supported = true;
         }
 #else
         supported = true;
 #endif
-
+        
         initialized = true;
     }
     return supported;
@@ -46,6 +46,14 @@ static BOOL isIos6Supported() {
 
 - (void)draw:(CGContextRef)context
 {
+    if (self.localBackgroundColor != nil) {
+        CGContextSaveGState(context);
+        CGContextSetBlendMode(context, kCGBlendModeNormal);
+        CGContextSetFillColorWithColor(context, self.localBackgroundColor.CGColor);
+        CGContextFillRect(context, [self displayBounds]);
+        CGContextRestoreGState(context);
+    }
+    
 }
 
 - (CGRect) displayBounds
@@ -59,7 +67,7 @@ static BOOL isIos6Supported() {
 {
     CGSize size = CGSizeMake(self.width, self.ascent + self.descent);
     UIGraphicsBeginImageContext(size);
-
+    
     // get a reference to that context we created
     CGContextRef context = UIGraphicsGetCurrentContext();
     // translate/flip the graphics context (for transforming from CG* coords to UI* coords
@@ -67,12 +75,12 @@ static BOOL isIos6Supported() {
     CGContextScaleCTM(context, 1.0, -1.0);
     // move the position to (0,0)
     CGContextTranslateCTM(context, -self.position.x, -self.position.y);
-
+    
     // Move the line up by self.descent
     CGContextTranslateCTM(context, 0, self.descent);
     // Draw self on context
     [self draw:context];
-
+    
     // generate a new UIImage from the graphics context we drew onto
     UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
     return img;
@@ -155,11 +163,12 @@ static BOOL isIos6Supported() {
 
 - (void)draw:(CGContextRef)context
 {
+    [super draw:context];
     CGContextSaveGState(context);
-
+    
     CGContextSetTextPosition(context, self.position.x, self.position.y);
     CTLineDraw(_line, context);
-
+    
     CGContextRestoreGState(context);
 }
 
@@ -207,23 +216,24 @@ static BOOL isIos6Supported() {
         } else {
             displayAtom.textColor = displayAtom.localTextColor;
         }
-
+        
     }
 }
 
 - (void)draw:(CGContextRef)context
 {
+    [super draw:context];
     CGContextSaveGState(context);
-
+    
     // Make the current position the origin as all the positions of the sub atoms are relative to the origin.
     CGContextTranslateCTM(context, self.position.x, self.position.y);
     CGContextSetTextPosition(context, 0, 0);
-
+    
     // draw each atom separately
     for (MTDisplay* displayAtom in self.subDisplays) {
         [displayAtom draw:context];
     }
-
+    
     CGContextRestoreGState(context);
 }
 
@@ -237,7 +247,7 @@ static BOOL isIos6Supported() {
         if (ascent > max_ascent) {
             max_ascent = ascent;
         }
-
+        
         CGFloat descent = MAX(0, 0 - (atom.position.y - atom.descent));
         if (descent > max_descent) {
             max_descent = descent;
@@ -325,20 +335,21 @@ static BOOL isIos6Supported() {
 
 - (void)draw:(CGContextRef)context
 {
+    [super draw:context];
     [_numerator draw:context];
     [_denominator draw:context];
-
+    
     CGContextSaveGState(context);
-
+    
     [self.textColor setStroke];
-
+    
     // draw the horizontal line
     MTBezierPath* path = [MTBezierPath bezierPath];
     [path moveToPoint:CGPointMake(self.position.x, self.position.y + self.linePosition)];
     [path addLineToPoint:CGPointMake(self.position.x + self.width, self.position.y + self.linePosition)];
     path.lineWidth = self.lineThickness;
     [path stroke];
-
+    
     CGContextRestoreGState(context);
 }
 
@@ -358,7 +369,7 @@ static BOOL isIos6Supported() {
         _radicand = radicand;
         _radicalGlyph = glyph;
         _radicalShift = 0;
-
+        
         self.position = position;
         self.range = range;
     }
@@ -371,11 +382,11 @@ static BOOL isIos6Supported() {
     CGFloat kernBefore = fontMetrics.radicalKernBeforeDegree;
     CGFloat kernAfter = fontMetrics.radicalKernAfterDegree;
     CGFloat raise = fontMetrics.radicalDegreeBottomRaisePercent * (self.ascent - self.descent);
-
+    
     // The layout is:
     // kernBefore, raise, degree, kernAfter, radical
     _degree = degree;
-
+    
     // the radical is now shifted by kernBefore + degree.width + kernAfter
     _radicalShift = kernBefore + degree.width + kernAfter;
     if (_radicalShift < 0) {
@@ -384,7 +395,7 @@ static BOOL isIos6Supported() {
         kernBefore -= _radicalShift;
         _radicalShift = 0;
     }
-
+    
     // Note: position of degree is relative to parent.
     self.degree.position = CGPointMake(self.position.x + kernBefore, self.position.y + raise);
     // Update the width by the _radicalShift
@@ -417,25 +428,26 @@ static BOOL isIos6Supported() {
 
 - (void)draw:(CGContextRef)context
 {
+    [super draw:context];
     // draw the radicand & degree at its position
     [self.radicand draw:context];
     [self.degree draw:context];
-
+    
     CGContextSaveGState(context);
     [self.textColor setStroke];
     [self.textColor setFill];
-
+    
     // Make the current position the origin as all the positions of the sub atoms are relative to the origin.
     CGContextTranslateCTM(context, self.position.x + _radicalShift, self.position.y);
     CGContextSetTextPosition(context, 0, 0);
-
+    
     // Draw the glyph.
     [_radicalGlyph draw:context];
-
+    
     // Draw the VBOX
     // for the kern of, we don't need to draw anything.
     CGFloat heightFromTop = _topKern;
-
+    
     // draw the horizontal line with the given thickness
     MTBezierPath* path = [MTBezierPath bezierPath];
     CGPoint lineStart = CGPointMake(_radicalGlyph.width, self.ascent - heightFromTop - self.lineThickness / 2); // subtract half the line thickness to center the line
@@ -445,7 +457,7 @@ static BOOL isIos6Supported() {
     path.lineWidth = _lineThickness;
     path.lineCapStyle = kCGLineCapRound;
     [path stroke];
-
+    
     CGContextRestoreGState(context);
 }
 
@@ -466,7 +478,7 @@ static BOOL isIos6Supported() {
     if (self) {
         _font = font;
         _glyph = glyph;
-
+        
         self.position = CGPointZero;
         self.range = range;
     }
@@ -475,16 +487,17 @@ static BOOL isIos6Supported() {
 
 - (void)draw:(CGContextRef)context
 {
+    [super draw:context];
     CGContextSaveGState(context);
-
+    
     [self.textColor setFill];
-
+    
     // Make the current position the origin as all the positions of the sub atoms are relative to the origin.
     CGContextTranslateCTM(context, self.position.x, self.position.y - self.shiftDown);
     CGContextSetTextPosition(context, 0, 0);
-
+    
     CTFontDrawGlyphs(_font.ctFont, &_glyph, &CGPointZero, 1, context);
-
+    
     CGContextRestoreGState(context);
 }
 
@@ -531,17 +544,18 @@ static BOOL isIos6Supported() {
 
 - (void)draw:(CGContextRef)context
 {
+    [super draw:context];
     CGContextSaveGState(context);
-
+    
     [self.textColor setFill];
-
+    
     // Make the current position the origin as all the positions of the sub atoms are relative to the origin.
     CGContextTranslateCTM(context, self.position.x, self.position.y - self.shiftDown);
     CGContextSetTextPosition(context, 0, 0);
-
+    
     // Draw the glyphs.
     CTFontDrawGlyphs(_font.ctFont, _glyphs, _positions, _numGlyphs, context);
-
+    
     CGContextRestoreGState(context);
 }
 
@@ -570,7 +584,7 @@ static BOOL isIos6Supported() {
     CGFloat _upperLimitGap;
     CGFloat _lowerLimitGap;
     CGFloat _extraPadding;
-
+    
     MTDisplay *_nucleus;
 }
 
@@ -581,10 +595,10 @@ static BOOL isIos6Supported() {
         _upperLimit = upperLimit;
         _lowerLimit = lowerLimit;
         _nucleus = nucleus;
-
+        
         CGFloat maxWidth = MAX(nucleus.width, upperLimit.width);
         maxWidth = MAX(maxWidth, lowerLimit.width);
-
+        
         _limitShift = limitShift;
         _upperLimitGap = 0;
         _lowerLimitGap = 0;
@@ -672,6 +686,7 @@ static BOOL isIos6Supported() {
 
 - (void)draw:(CGContextRef)context
 {
+    [super draw:context];
     // Draw the elements.
     [self.upperLimit draw:context];
     [self.lowerLimit draw:context];
@@ -689,7 +704,7 @@ static BOOL isIos6Supported() {
     self = [super init];
     if (self) {
         _inner = inner;
-
+        
         self.position = position;
         self.range = range;
     }
@@ -704,12 +719,13 @@ static BOOL isIos6Supported() {
 
 - (void)draw:(CGContextRef)context
 {
+    [super draw:context];
     [self.inner draw:context];
-
+    
     CGContextSaveGState(context);
-
+    
     [self.textColor setStroke];
-
+    
     // draw the horizontal line
     MTBezierPath* path = [MTBezierPath bezierPath];
     CGPoint lineStart = CGPointMake(self.position.x, self.position.y + self.lineShiftUp);
@@ -718,7 +734,7 @@ static BOOL isIos6Supported() {
     [path addLineToPoint:lineEnd];
     path.lineWidth = self.lineThickness;
     [path stroke];
-
+    
     CGContextRestoreGState(context);
 }
 
@@ -771,14 +787,120 @@ static BOOL isIos6Supported() {
 
 - (void)draw:(CGContextRef)context
 {
+    [super draw:context];
     [self.accentee draw:context];
-
+    
     CGContextSaveGState(context);
     CGContextTranslateCTM(context, self.position.x, self.position.y);
     CGContextSetTextPosition(context, 0, 0);
-
+    
     [self.accent draw:context];
-
+    
     CGContextRestoreGState(context);
 }
+@end
+
+#pragma mark - MTInnerDisplay
+
+@implementation MTInnerDisplay {
+  MTMathListDisplay *_inner;
+}
+
+- (instancetype) initWithInner:(MTMathListDisplay*) inner leftDelimiter:(MTDisplay*) leftDelimiter rightDelimiter:(MTDisplay*) rightDelimiter atIndex:(NSUInteger) index
+{
+  self = [super init];
+  if (self) {
+    _leftDelimiter = leftDelimiter;
+    _rightDelimiter = rightDelimiter;
+    _inner = inner;
+    _index = index;
+    self.range = NSMakeRange(_index, 1);
+    
+    self.width = leftDelimiter.width + inner.width + rightDelimiter.width;
+  }
+  return self;
+}
+
+- (void)setPosition:(CGPoint)position
+{
+  super.position = position;
+  [self updateLeftDelimiterPosition];
+  [self updateInnerPosition];
+  [self updateRightDelimiterPosition];
+}
+
+- (void) updateLeftDelimiterPosition
+{
+  if (_leftDelimiter) {
+    _leftDelimiter.position = self.position;
+  }
+}
+
+- (void) updateRightDelimiterPosition
+{
+  if (_rightDelimiter) {
+    _rightDelimiter.position = CGPointMake(_inner.position.x + _inner.width, self.position.y);    
+  }
+}
+
+- (void) updateInnerPosition
+{
+  if (_leftDelimiter) {
+    _inner.position = CGPointMake(_leftDelimiter.position.x + _leftDelimiter.width, self.position.y);
+  } else {
+    _inner.position = self.position;
+  }
+}
+
+- (CGFloat)ascent
+{
+  if (_leftDelimiter) {
+    return _leftDelimiter.ascent;
+  }
+  if (_rightDelimiter) {
+    return _rightDelimiter.ascent;
+  }
+  return _inner.ascent;
+}
+
+- (CGFloat)descent
+{
+  if (_leftDelimiter) {
+    return _leftDelimiter.descent;
+  }
+  if (_rightDelimiter) {
+    return _rightDelimiter.descent;
+  }
+  return _inner.descent;
+}
+
+- (CGFloat)width
+{
+  CGFloat w = _inner.width;
+  if (_leftDelimiter) {
+    w += _leftDelimiter.width;
+  }
+  if (_rightDelimiter) {
+    w += _rightDelimiter.width;
+  }
+  return w;
+}
+
+- (void)setTextColor:(MTColor *)textColor
+{
+  [super setTextColor:textColor];
+  self.leftDelimiter.textColor = textColor;
+  self.rightDelimiter.textColor = textColor;
+  _inner.textColor = textColor;
+}
+
+- (void)draw:(CGContextRef)context
+{
+  [super draw:context];
+  // Draw the elements.
+  [self.leftDelimiter draw:context];
+  [self.rightDelimiter draw:context];
+  [_inner draw:context];
+}
+
 @end
